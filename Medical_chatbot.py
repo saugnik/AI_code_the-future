@@ -3,7 +3,6 @@ import pandas as pd
 import re
 from datetime import datetime
 
-# Sample medical responses for various diseases and conditions, including symptoms, remedies, and medications
 medical_responses = {
     "flu": {
         "symptoms": "Common symptoms of flu include fever, cough, sore throat, body aches, and fatigue.",
@@ -81,19 +80,19 @@ def medical_chatbot_response(user_input):
             remedies = medical_responses[key]["remedies"]
             medications = medical_responses[key]["medications"]
 
-            # Get the current date
+
             current_date = datetime.now().strftime("%Y-%m-%d")
 
-            # Create a DataFrame for the output
+
             output_df = pd.DataFrame({
-                "Date": [current_date],  # Add the current date
+                "Date": [current_date],
                 "Disease": [key],
                 "Symptoms": [symptoms],
                 "Remedies": [remedies],
                 "Medications": [medications]
             })
 
-            # Save the DataFrame as a CSV file
+
             output_csv_file = "medical_advice.csv"
             output_df.to_csv(output_csv_file, index=False)
 
@@ -101,14 +100,12 @@ def medical_chatbot_response(user_input):
 
     return "I'm not sure about that. Please consult a healthcare professional for accurate information.", "", "", None
 
-# Create a Gradio interface for the medical chatbot
 iface = gr.Interface(
     fn=medical_chatbot_response,
     inputs="text",
-    outputs=["text", "text", "text", gr.File(label="Download Advice as CSV")],  # Include gr.File component
+    outputs=["text", "text", "text", gr.File(label="Download Advice as CSV")], 
     title="Medical Chatbot",
     description="A comprehensive medical chatbot providing basic health information. Please consult a healthcare professional for serious concerns.",
 )
 
-# Launch the Gradio interface
 iface.launch()
